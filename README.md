@@ -43,10 +43,12 @@ const greeting = r('test.R', 'greet', {
 });
 console.log(greeting); // Hello John the Wise
 
-// child_process.execFile options can also be supplied
+// child_process.execFileSync options can also be supplied
 r('test.R', 'add', [1, 2], {
     /*
-     * cwd: '...',
+     * input: '...',
+     * stdio: '...',
+     * cwd: '...,
      * env: {...},
      * ...
      */
