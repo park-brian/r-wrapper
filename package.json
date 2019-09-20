@@ -1,0 +1,18 @@
+{
+  "name": "r-wrapper",
+  "version": "1.0.0",
+  "description": "A simple R wrapper",
+  "main": "src/r.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "r",
+    "wrapper"
+  ],
+  "author": "park-brian",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  }
+}
