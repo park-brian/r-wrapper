@@ -1,14 +1,14 @@
-### r-wrapper
+# r-wrapper
 
-#### Getting Started
+## Getting Started
 
-##### Prerequisites
+### Prerequisites
 - Node.js 6+
 - R 3.0+
   - jsonlite
 
 
-##### Install package
+### Install package
 ```bash
 # install jsonlite before use
 R -e "install.packages('jsonlite', repos='https://cloud.r-project.org/')"
@@ -16,7 +16,7 @@ R -e "install.packages('jsonlite', repos='https://cloud.r-project.org/')"
 npm install --save r-wrapper
 ```
 
-##### Example file: test.R
+### Example file: _test.R_
 ```R
 add <- function(a, b) {
     a + b
@@ -27,7 +27,7 @@ greet <- function(name, adjective) {
 }
 ```
 
-##### Run functions from test.R
+### Run functions from _test.R_
 ```javascript
 const r = require('r-wrapper');
 const path = require('path');
@@ -41,7 +41,7 @@ const greeting = r('test.R', 'greet', {
     name: 'John',
     adjective: 'Wise',
 });
-console.log(greeting); // Hello John the Wise
+console.log(greeting); // "Hello John the Wise"
 
 // child_process.execFileSync options can also be supplied
 r('test.R', 'add', [1, 2], {
