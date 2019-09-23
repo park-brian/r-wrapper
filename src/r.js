@@ -8,9 +8,10 @@ module.exports = r;
 /**
  * Runs a function from an R source file using wrapper.R.
  * This function requires jsonlite to be installed.
- * @param {string} sourceFilePath - the absolute path to the source file
- * @param {string} functionName - the function to call
- * @param {object} functionArgs - an object containing named parameter values
+ * @param {string} sourceFilePath - The absolute path to the source file
+ * @param {string} functionName - The function to call
+ * @param {array|object} functionArgs - An array consisting of positional parameters. If an object is provided, named parameters are used instead.
+ * @param {object} execFileOptions - An object containing options for child_process.execFileSync
  */
 function r(sourceFilePath, functionName, functionArgs, execFileOptions) {
     let inputFilePath = tempFilePath('.json');
@@ -43,6 +44,9 @@ function r(sourceFilePath, functionName, functionArgs, execFileOptions) {
         );
     }
 
+    // clean up temporary files
+    // note: if an exception is thrown, these files
+    // should not be cleaned up.
     [inputFilePath, outputFilePath].forEach(filePath => {
         if (existsSync(filePath)) unlinkSync(filePath);
     });
