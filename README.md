@@ -45,7 +45,7 @@ r('test.R', 'add', [1, 2], {
     /*
      * input: '...',
      * stdio: '...',
-     * cwd: '...,
+     * cwd: '...',
      * env: {...},
      * ...
      */
@@ -59,13 +59,13 @@ Through `src/wrapper.R`, we read in the following parameters as command line arg
 - R source file path
 - R function name
 - Function parameters file path
-- output file path
+- Output file path
 
 We then do the following:
 
 1. `source` the specified file
-2. Deserialize the function's parameters using `jsonlite::read_json`
-3. `do.call` the specified function, passing in any parameters as a list
+2. Read the function parameters file using `jsonlite::read_json`
+3. Execute the specified function using `do.call`, passing in the parameters as a list
 4. Write any output to the output file path
 
-We can then write a script (`src/r.js`) to call `wrapper.R` using `Rscript`. This script serializes function parameters to a json file, executes the wrapper, and returns the parsed contents of the output json file after cleaning up after itself.
+We can write a script (`src/r.js`) to call `wrapper.R` using `Rscript`. This script writes function parameters to a json file, executes the wrapper, and returns the parsed contents of the output json file after cleaning up after itself.
