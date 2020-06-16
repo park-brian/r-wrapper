@@ -18,38 +18,38 @@ function r(sourceFilePath, functionName, functionArgs, execFileOptions) {
     let outputFilePath = tempFilePath('.json');
     let output;
 
-    // creates the json parameters file
-    if (functionArgs !== undefined) {
-        writeFileSync(
-            inputFilePath,
-            JSON.stringify(functionArgs)
+    try {
+        // creates the json parameters file
+        if (functionArgs !== undefined) {
+            writeFileSync(
+                inputFilePath,
+                JSON.stringify(functionArgs)
+            );
+        }
+
+        // runs the wrapper against the provided arguments
+        execFileSync(
+            'Rscript', [
+                path.resolve(__dirname, 'wrapper.R'),
+                sourceFilePath,
+                functionName,
+                inputFilePath,
+                outputFilePath
+            ], execFileOptions
         );
+
+        // populate output file if it exists
+        if (existsSync(outputFilePath)) {
+            output = JSON.parse(
+                readFileSync(outputFilePath).toString()
+            );
+        }
+    } finally {
+        // clean up temporary files
+        [inputFilePath, outputFilePath].forEach(filePath => {
+            if (existsSync(filePath)) unlinkSync(filePath);
+        });
     }
-
-    // runs the wrapper against the provided arguments
-    execFileSync(
-        'Rscript', [
-            path.resolve(__dirname, 'wrapper.R'),
-            sourceFilePath,
-            functionName,
-            inputFilePath,
-            outputFilePath
-        ], execFileOptions
-    );
-
-    // populate output file if it exists
-    if (existsSync(outputFilePath)) {
-        output = JSON.parse(
-            readFileSync(outputFilePath)
-        );
-    }
-
-    // clean up temporary files
-    // note: if an exception is thrown, these files
-    // should not be cleaned up.
-    [inputFilePath, outputFilePath].forEach(filePath => {
-        if (existsSync(filePath)) unlinkSync(filePath);
-    });
 
     return output;
 }
