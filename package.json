@@ -18,7 +18,7 @@
     "url": "https://github.com/park-brian/r-wrapper/issues"
   },
   "devDependencies": {
-    "mocha": "^6.2.0"
+    "mocha": "^8.0.1"
   },
   "files": [
     "src/"
