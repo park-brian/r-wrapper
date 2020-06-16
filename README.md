@@ -7,9 +7,11 @@
 
 
 ### Installing
+Ensure that R is in the current user's PATH.
+
 ```bash
-# install jsonlite
-R -e "install.packages('jsonlite', repos='https://cloud.r-project.org/')"
+# install jsonlite (note: Rscript.exe does not pick up all .libPaths() by default unless R_LIBS_USER is set, so the command below installs to the default .Library location)
+R -e "install.packages('jsonlite', repos='https://cloud.r-project.org/', lib = .Library)"
 
 npm install --save r-wrapper
 ```
@@ -51,21 +53,3 @@ r('test.R', 'add', [1, 2], {
      */
 });
 ```
-
-### Implementation
-
-Through `src/wrapper.R`, we read in the following parameters as command line arguments:
-
-- R source file path
-- R function name
-- Function parameters file path
-- Output file path
-
-We then do the following:
-
-1. `source` the specified file
-2. Read the function parameters file using `jsonlite::read_json`
-3. Execute the specified function using `do.call`, passing in the parameters as a list
-4. Write any output to the output file path
-
-We can write a script (`src/r.js`) to call `wrapper.R` using `Rscript`. This script writes function parameters to a json file, executes the wrapper, and returns the parsed contents of the output json file after cleaning up after itself.
