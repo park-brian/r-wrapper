@@ -25,10 +25,11 @@ jobs:
       with:
         r-version: ${{ matrix.r-version }}
 
-    - name: Install R dependencies
-      run: Rscript -e "install.packages('jsonlite', repos='https://cloud.r-project.org/', lib = .Library)"
+    - name: Install R packages
+      run: install.packages('jsonlite', repos='https://cloud.r-project.org/')
+      shell: Rscript {0}
 
-    - name: npm install and test
+    - name: Run npm install and test
       run: |
         npm install
         npm test
