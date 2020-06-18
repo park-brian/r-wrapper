@@ -10,17 +10,27 @@ jobs:
     strategy:
       matrix:
         node-version: [8.x, 10.x, 12.x]
+        r-version: ['3.5.3', '3.6.3', '4.0.1']
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+
+    - name: Use R ${{ matrix.r-version }}
+      uses: r-lib/actions/setup-R@v1
+      with:
+        r-version: ${{ matrix.r-version }}
+
+    - name: Install R dependencies
+      run: Rscript -e "install.packages('jsonlite', repos='https://cloud.r-project.org/', lib = .Library)"
+
+    - name: npm install and test
       run: |
         npm install
-        npm run build --if-present
         npm test
       env:
         CI: true
