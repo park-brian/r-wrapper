@@ -13,7 +13,7 @@ jobs:
         r-version: ['3.5.3', '3.6.3', '4.0.1']
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -21,7 +21,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Use R ${{ matrix.r-version }}
-      uses: r-lib/actions/setup-R@v1
+      uses: r-lib/actions/setup-r@v1
       with:
         r-version: ${{ matrix.r-version }}
 
