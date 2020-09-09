@@ -1,5 +1,5 @@
-const { readFile, writeFile, unlink, mkdtemp, rmdir } = require('fs').promises;
 const execFile = require('util').promisify(require('child_process').execFile);
+const { readFile, writeFile, unlink, mkdtemp, rmdir } = require('fs').promises;
 const { tmpdir } = require('os');
 const path = require('path');
 
@@ -11,7 +11,7 @@ module.exports = r;
  * @param {string} sourceFilePath - The absolute path to the source file
  * @param {string} functionName - The function to call
  * @param {array|object} functionArgs - An array consisting of positional parameters. If an object is provided, named parameters are used instead.
- * @param {object} execFileOptions - An object containing options for child_process.execFileSync
+ * @param {object} execFileOptions - An object containing options for child_process.execFile
  */
 async function r(sourceFilePath, functionName, functionArgs, execFileOptions) {
     const tempDir = await mkdtemp(path.join(tmpdir(), 'r-'));

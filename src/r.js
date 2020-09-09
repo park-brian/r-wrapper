@@ -4,6 +4,7 @@ const { tmpdir } = require('os');
 const path = require('path');
 
 module.exports = r;
+r.async = require('./async/r');
 
 /**
  * Runs a function from an R source file using wrapper.R.
