@@ -1,5 +1,5 @@
 const { execFileSync } = require('child_process');
-const { readFileSync, writeFileSync, existsSync, unlinkSync } = require('fs');
+const { readFileSync, writeFileSync, existsSync, unlinkSync, rmdirSync, mkdtempSync } = require('fs');
 const { tmpdir } = require('os');
 const path = require('path');
 
@@ -14,8 +14,9 @@ module.exports = r;
  * @param {object} execFileOptions - An object containing options for child_process.execFileSync
  */
 function r(sourceFilePath, functionName, functionArgs, execFileOptions) {
-    let inputFilePath = tempFilePath('.json');
-    let outputFilePath = tempFilePath('.json');
+    const tempDir = mkdtempSync(path.join(tmpdir(), 'r-'));
+    const inputFilePath = path.join(tempDir, 'input.json');
+    const outputFilePath = path.join(tempDir, 'output.json');
     let output;
 
     try {
@@ -45,26 +46,15 @@ function r(sourceFilePath, functionName, functionArgs, execFileOptions) {
             );
         }
     } finally {
-        // clean up temporary files
-        [inputFilePath, outputFilePath].forEach(filePath => {
-            if (existsSync(filePath)) unlinkSync(filePath);
-        });
+        try {
+            // clean up temporary files
+            unlinkSync(inputFilePath);
+            unlinkSync(outputFilePath);
+            rmdirSync(tempDir);
+        } catch(e) {
+            // do nothing if files do not exist
+        }
     }
 
     return output;
-}
-
-/**
- * Generates a unique, temporary file path in the system's temp directory
- * @param {string} suffix - an optional suffix
- */
-function tempFilePath(suffix) {
-    do {
-        var filePath = path.join(
-            tmpdir(),
-            Math.random() + (suffix || '')
-        );
-    } while (existsSync(filePath));
-
-    return filePath;
 }
