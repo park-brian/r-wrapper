@@ -9,4 +9,5 @@ functionArguments <- list()
 if (file.exists(functionArgumentsFile))
     functionArguments <- jsonlite::read_json(functionArgumentsFile, simplifyDataFrame = T)
 output <- do.call(functionName, as.list(functionArguments))
-jsonlite::write_json(output, outputFile, auto_unbox = TRUE, force = TRUE, na = "null")
+jsonlite::write_json(output, outputFile, auto_unbox = TRUE, force = TRUE, na = "null", digits = NA)
+    
