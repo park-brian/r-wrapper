@@ -1,6 +1,6 @@
 {
   "name": "r-wrapper",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A simple R wrapper",
   "main": "src/r.js",
   "scripts": {
