@@ -83,3 +83,7 @@ await r('test.R', 'add', [1, 2], {
      */
 });
 ```
+
+### Notes
+
+- To prevent atomic vectors of length 1 from being unboxed, wrap them with `I()`
